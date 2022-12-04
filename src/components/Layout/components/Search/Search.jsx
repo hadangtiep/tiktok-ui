@@ -5,10 +5,13 @@ import {
     faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames/bind";
+
+import * as searchServices from "~/apiServices/searchServices";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import HeadlessTippy from "@tippyjs/react/headless";
 import { Wrapper as PopperWrapper } from "~/components/Popper";
 import AcountItem from "~/components/AccountItem";
+import { useDebounce } from "~/components/hooks";
 import styles from './search.module.scss';
 
 const cx = classNames.bind(styles);
@@ -19,28 +22,43 @@ function Search() {
     const [showResult, setShowResult] = useState(true);
     const [loading, setLoading] = useState(false);
 
+    const debounced = useDebounce(searchValue, 500);
+
     const inputRef = useRef();
 
-    
     useEffect(() => {
-        if(!searchValue || searchValue.trim() === ""){
+        if(!debounced || debounced.trim() === ""){
             setSearchResult([]);
             return;
         }else{
-            setLoading(true)
-            fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(searchValue)}&type=less`)
-                .then(res => {
-                    return res.json();
-                })
-                .then(res => {
-                    setSearchResult(res.data);
-                    setLoading(false);
-                })
-                .catch(()=>{
-                    setLoading(false);
-                })
+
+            const fetchApi = async () => {
+                setLoading(true);
+                const result = await searchServices.search(debounced);
+                setSearchResult(result);
+                setLoading(false);
+            }
+            fetchApi();
+            //CÁCH DÙNG VỚI ASYNC/ AWAIT:
+            
+
+            //CÁCH DÙNG VỚI FETCH:
+            // fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debounced)}&type=less`)
+            //     .then(res => {
+            //         return res.json();
+            //     })
+            //     .then(res => {
+            //         setSearchResult(res.data);
+            //         setLoading(false);
+            //     })
+            //     .catch(()=>{
+            //         setLoading(false);
+            //     })
+
+            //CÁCH DÙNG VỚI AXIOS:
+
         }
-    }, [searchValue]);
+    }, [debounced]);
 
     const handleClear = () => {
         setSearchValue('');
