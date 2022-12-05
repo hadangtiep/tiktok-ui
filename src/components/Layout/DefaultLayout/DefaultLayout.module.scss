@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     .container{
+        margin-top: var(--default-layout-header-height);
         width: var(--default-layout-width);
         padding: 0 var(--default-layout-horizontal-space) 0 var(--default-layout-horizontal-space);
         min-height: 1000px;
