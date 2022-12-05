@@ -11,6 +11,8 @@ import {
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
+
 import Button from "~/components/Button";
 import styles from "./Header.module.scss";
 import images from "~/assets/images";
@@ -19,6 +21,7 @@ import { UploadIcon } from "~/components/Icons/Icons";
 import { faBitcoin } from "@fortawesome/free-brands-svg-icons";
 import Image from "~/components/Image/image";
 import Search from "../Search/Search";
+import configRoutes from "~/config/routes";
 
 const cx = classNames.bind(styles);
 const MENU_ITEM = [
@@ -91,7 +94,9 @@ function Header() {
     return (
         <header className={cx("wrapper")}>
             <div className={cx("inner")}>
-                <img src={images.logo} alt='ticktok' />
+                <Link to={configRoutes.home} className={cx("logo-link")}>
+                    <img src={images.logo} alt='ticktok' />
+                </Link>
 
                 <Search />
 
