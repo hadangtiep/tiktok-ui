@@ -21,7 +21,7 @@ import { UploadIcon } from "~/components/Icons/Icons";
 import { faBitcoin } from "@fortawesome/free-brands-svg-icons";
 import Image from "~/components/Image/image";
 import Search from "../Search/Search";
-import configRoutes from "~/config/routes";
+import config from "~/config";
 
 const cx = classNames.bind(styles);
 const MENU_ITEM = [
@@ -94,7 +94,7 @@ function Header() {
     return (
         <header className={cx("wrapper")}>
             <div className={cx("inner")}>
-                <Link to={configRoutes.home} className={cx("logo-link")}>
+                <Link to={config.routes.home} className={cx("logo-link")}>
                     <img src={images.logo} alt='ticktok' />
                 </Link>
 
