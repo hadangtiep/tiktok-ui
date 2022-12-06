@@ -10,7 +10,7 @@ import * as searchServices from "~/services/searchService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import HeadlessTippy from "@tippyjs/react/headless";
 import { Wrapper as PopperWrapper } from "~/components/Popper";
-import AcountItem from "~/components/AccountItem";
+import AccountItem from "~/components/AccountItem";
 import { useDebounce } from "~/hooks";
 import styles from './search.module.scss';
 
@@ -94,7 +94,7 @@ function Search() {
                             {
                                 searchResult.map(result=>{
                                     return (
-                                        <AcountItem key={result.id} data={result} />
+                                        <AccountItem key={result.id} data={result} />
                                     )
                                 })
                             }
