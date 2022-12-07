@@ -10,6 +10,7 @@ function useDebounce (value, delay) {
             clearTimeout(timeOutId)
         }
     },[value]);
+    
     return deBounceValue;
 }
 export default useDebounce;

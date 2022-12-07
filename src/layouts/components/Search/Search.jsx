@@ -17,33 +17,33 @@ import styles from './search.module.scss';
 const cx = classNames.bind(styles);
 
 function Search() {
+    const [searchValue, setSearchValue] = useState("");
     const [searchResult, setSearchResult] = useState([]);
-    const [searchValue, setSearchValue] = useState();
-    const [showResult, setShowResult] = useState(true);
+    const [showResult, setShowResult] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const debounced = useDebounce(searchValue, 500);
+    const debouncedValue = useDebounce(searchValue, 500);
 
     const inputRef = useRef();
 
     useEffect(() => {
-        if(!debounced || debounced.trim() === ""){
+        if(!debouncedValue.trim()){
             setSearchResult([]);
             return;
-        }else{
+        }
 
-            const fetchApi = async () => {
-                setLoading(true);
-                const result = await searchServices.search(debounced);
-                setSearchResult(result);
-                setLoading(false);
-            }
-            fetchApi();
+        const fetchApi = async () => {
+            setLoading(true);
+            const result = await searchServices.search(debouncedValue);
+            setSearchResult(result);
+            setLoading(false);
+        }
+        fetchApi();
             //CÁCH DÙNG VỚI ASYNC/ AWAIT:
             
 
             //CÁCH DÙNG VỚI FETCH:
-            // fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debounced)}&type=less`)
+            // fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debouncedValue)}&type=less`)
             //     .then(res => {
             //         return res.json();
             //     })
@@ -57,8 +57,7 @@ function Search() {
 
             //CÁCH DÙNG VỚI AXIOS:
 
-        }
-    }, [debounced]);
+    }, [debouncedValue]);
 
     const handleClear = () => {
         setSearchValue('');
@@ -90,7 +89,7 @@ function Search() {
                         {...attrs}
                     >
                         <PopperWrapper>
-                            <h4 className={cx("search-title")}>Accouts</h4>
+                            <h4 className={cx("search-title")}>Accounts</h4>
                             {
                                 searchResult.map(result=>{
                                     return (
